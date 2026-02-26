@@ -24,18 +24,25 @@ class TestBooksCollector:
         collector.set_book_genre(book_name, genre)
         assert collector.get_book_genre(book_name) == genre
 
-    @pytest.mark.parametrize('book_name, expected_genre', [
-        ('Оно', 'Ужасы'),
-        ('Без жанра', ''),  # книга без жанра
-        ('Не существующая', None)  # несуществующая книга
-    ])
-    def test_get_book_genre_returns_correct_values(self, book_name, expected_genre):
+    def test_get_book_genre_returns_genre_for_valid_book_with_genre(self):
         collector = BooksCollector()
-        if book_name != 'Не существующая':
-            collector.add_new_book(book_name)
-            if expected_genre != '':
-                collector.set_book_genre(book_name, expected_genre)
+        book_name = 'Оно'
+        expected_genre = 'Ужасы'
+        collector.add_new_book(book_name)
+        collector.set_book_genre(book_name, expected_genre)
+        assert collector.get_book_genre(book_name) == expected_genre
 
+    def test_get_book_genre_returns_empty_string_for_valid_book_without_genre(self):
+        collector = BooksCollector()
+        book_name = 'Без жанра'
+        expected_genre = ''
+        collector.add_new_book(book_name)
+        assert collector.get_book_genre(book_name) == expected_genre
+
+    def test_get_book_genre_returns_none_for_nonexistent_book(self):
+        collector = BooksCollector()
+        book_name = 'Не существующая'
+        expected_genre = None
         assert collector.get_book_genre(book_name) == expected_genre
 
     @pytest.mark.parametrize('genre, expected_books', [
