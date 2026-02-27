@@ -1,0 +1,7 @@
+.idea/
+.build/
+.target/
+build/
+target/
+__pycache__/
+*.pyc
